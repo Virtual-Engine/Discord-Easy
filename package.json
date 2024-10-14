@@ -1,0 +1,38 @@
+{
+  "name": "discord-easy",
+  "description": "`DiscordEasy` is a simplified module for creating Discord bots using `discord.js`. It allows easy management of message commands and slash commands, as well as adding events to your bot.",
+  "version": "1.0.2",
+  "main": "index.js",
+  "scripts": {
+    "test": "index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Virtual-Engine/Discord-Easy.git"
+  },
+  "keywords": [
+    "discord",
+    "js",
+    "bot",
+    "easy",
+    "commands"
+  ],
+  "author": "zenith",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Virtual-Engine/Discord-Easy/issues"
+  },
+  "homepage": "https://github.com/Virtual-Engine/Discord-Easy#readme",
+  "files": [
+    "index.js",
+    "checker.js",
+    "readme.md"
+  ],
+  "dependencies": {
+    "axios": "^1.7.7",
+    "discord.js": "^14.16.3",
+    "mysql": "^2.18.1",
+    "mysql2": "^3.11.3",
+    "nyx-logger": "^3.0.0"
+  }
+}
