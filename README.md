@@ -1,6 +1,6 @@
 # DiscordEasy
 
-`DiscordEasy` is a simplified module for creating Discord bots using `discord.js`. It allows easy management of message commands and slash commands, as well as adding events to your bot.
+***DiscordEasy*** is a simplified module for creating Discord bots using ***discord.js***. It allows easy management of message commands and slash commands, as well as adding events to your bot.
 
 # Prerequisites
 
