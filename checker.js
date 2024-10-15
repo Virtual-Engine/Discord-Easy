@@ -1,6 +1,5 @@
 const axios = require('axios');
 const { version: currentVersion } = require('./package.json');
-const log = require("./index")
 
 async function checkForUpdates() {
     const response = await axios.get(`https://registry.npmjs.org/discord-easy`);
