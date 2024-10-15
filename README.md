@@ -1,4 +1,3 @@
-<<<<<<< V2
 # DiscordEasy
 
 ***DiscordEasy*** is a JavaScript module that simplifies the development of Discord bots using ***discord.js***. It makes it easy to manage commands, events, and interact with a database.
@@ -105,7 +104,4 @@ bot.addIntents(GatewayIntentBits.GuildMembers);
 ```
 
 # Contributing
-Contributions are welcome! If you have suggestions or want to add new features, feel free to open an issue or submit a pull request.
-=======
-s
->>>>>>> main
+- Contributions are welcome! If you have suggestions or want to add new features, feel free to open an issue or submit a pull request.
