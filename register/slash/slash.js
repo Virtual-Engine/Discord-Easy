@@ -6,7 +6,6 @@ class slash_command extends base_command {
         this.description = description;
     }
 
-    // La méthode spécifique pour enregistrer une commande de type slash
     register(bot) {
         bot.slashCommands.push({
             name: this.name,
