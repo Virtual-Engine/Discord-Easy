@@ -2,6 +2,8 @@
 
 ***DiscordEasy*** is a JavaScript module that simplifies the development of Discord bots using ***discord.js***. It makes it easy to manage commands, events, and interact with a database.
 
+- https://www.npmjs.com/discord-easy
+
 ## Table of Contents
 
 - [Features](#features)
