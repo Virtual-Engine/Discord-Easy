@@ -10,6 +10,9 @@
     "type": "git",
     "url": "git+https://github.com/Virtual-Engine/Discord-Easy.git"
   },
+  "publishConfig": {
+    "registry":"https://npm.pkg.github.com/@zenith-engine"
+  },
   "keywords": [
     "discord",
     "js",
