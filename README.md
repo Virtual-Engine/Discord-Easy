@@ -14,7 +14,6 @@
 - [Intent Configuration](#intent-configuration)
 - [Enable/Disable Debugging](#enable-disable-debugging)
 - [Contributing](#contributing)
-- [License](#license)
 
 ## Features
 
@@ -85,7 +84,7 @@ module.exports = {
     name: 'ready',
     register(bot) {
         bot.client.on('ready', () => {
-            console.log('Bot is online!');
+            console.log.print('Bot is online!');
         });
     }
 };
