@@ -1,7 +1,7 @@
 {
   "name": "discord-easy",
   "description": "`DiscordEasy` is a simplified module for creating Discord bots using `discord.js`. It allows easy management of message commands and slash commands, as well as adding events to your bot.",
-  "version": "2.1.2",
+  "version": "2.1.7",
   "main": "index.js",
   "scripts": {
     "test": "index.js"
@@ -26,7 +26,6 @@
   "files": [
     "register/*",
     "index.js",
-    "checker.js",
     "readme.md"
   ],
   "dependencies": {
@@ -35,7 +34,7 @@
     "fs": "^0.0.1-security",
     "mysql": "^2.18.1",
     "mysql2": "^3.11.3",
-    "nyx-logger": "^3.0.0",
+    "nyx-logger": "^4.0.0",
     "path": "^0.12.7"
   }
 }

@@ -1,9 +1,10 @@
 const { Client, GatewayIntentBits, Events, REST, Routes } = require('discord.js');
 const { log } = require('nyx-logger');
 const mysql = require('mysql2');
-const checkForUpdates = require("./checker");
 const fs = require('fs');
 const path = require('path');
+const axios = require('axios');
+const { version: currentVersion } = require('./package.json');
 
 class DiscordEasy {
     constructor(token, clientId, guildId, prefix = '!', useSlashCommands = true, useMessageCommands = true) {
@@ -48,7 +49,7 @@ class DiscordEasy {
                         try {
                             await command.execute(message);
                         } catch (error) {
-                            console.error(`Error executing command ${commandName}:`, error);
+                            log.print("err", `Error executing command ${commandName}:`, error);
                         }
                     }
                 }
@@ -63,20 +64,20 @@ class DiscordEasy {
             password: password,
             database: database
         });
-        log("info", 'Connected to database');
+        log.print("info", 'Connected to database');
     }
 
     addIntents(...newIntents) {
         this.intents.push(...newIntents);
         this.client = new Client({ intents: this.intents });
-        log("info", `Added intents: ${newIntents.join(', ')}`);
+        log.print("info", `Added intents: ${newIntents.join(', ')}`);
     }
 
     setPath(type, dirPath) {
         const absolutePath = path.resolve(process.cwd(), dirPath);
 
         if (!fs.existsSync(absolutePath)) {
-            console.error(`Directory not found: ${absolutePath}`);
+            log.print("err", `Directory not found: ${absolutePath}`);
             return;
         }
 
@@ -102,24 +103,24 @@ class DiscordEasy {
             if (instance.name && typeof instance.execute === 'function') {
                 if (instance.description) {
                     this.slashCommands.push(instance);
-                    log("info", `Added slash command: ${instance.name}`);
+                    log.print("info", `Added slash command: ${instance.name}`);
                 } else {
                     this.messageCommands.push(instance);
-                    log("info", `Added message command: ${instance.name}`);
+                    log.print("info", `Added message command: ${instance.name}`);
                 }
             } else {
-                console.error('Invalid command format:', instance);
+                log.print("err", 'Invalid command format:', instance);
             }
         } else if (type === 'event') {
             if (typeof instance.register === 'function') {
                 instance.register(this);
-                log("info", `Added event: ${instance.name}`);
+                log.print("info", `Added event: ${instance.name}`);
             } else {
-                log("err", 'Invalid event format:', instance);
+                log.print("err", 'Invalid event format:', instance);
             }
         } else {
             if (this.useMessageCommands) {
-                log("err", `Unknown type: ${type}`);
+                log.print("err", `Unknown type: ${type}`);
             }
         }
     }
@@ -129,19 +130,19 @@ class DiscordEasy {
             if (commandOrEvent.execute) {
                 if (commandOrEvent.description) {
                     this.slashCommands.push(commandOrEvent);
-                    log("info", `Added slash command: ${commandOrEvent.name}`);
+                    log.print("info", `Added slash command: ${commandOrEvent.name}`);
                 } else {
                     this.messageCommands.push(commandOrEvent);
-                    log("info", `Added message command: ${commandOrEvent.name}`);
+                    log.print("info", `Added message command: ${commandOrEvent.name}`);
                 }
             } else if (typeof commandOrEvent.register === 'function') {
                 commandOrEvent.register(this);
-                log("info", `Added event: ${commandOrEvent.name}`);
+                log.print("info", `Added event: ${commandOrEvent.name}`);
             } else {
-                log("err", 'Invalid command or event format:', commandOrEvent);
+                log.print("err", 'Invalid command or event format:', commandOrEvent);
             }
         } else {
-            log("err", 'Invalid command or event format:', commandOrEvent);
+            log.print("err", 'Invalid command or event format:', commandOrEvent);
         }
     }
 
@@ -150,16 +151,25 @@ class DiscordEasy {
 
         const rest = new REST({ version: '9' }).setToken(this.token);
         try {
-            log("info", 'Waiting for slash commands registry...');
+            log.print("info", 'Waiting for slash commands registry...');
 
             const commandsToRegister = this.slashCommands.filter(cmd => cmd.description);
 
             await rest.put(Routes.applicationGuildCommands(this.clientId, this.guildId), {
                 body: commandsToRegister,
             });
-            log("info", 'Slash commands registered');
+            log.print("info", 'Slash commands registered');
         } catch (error) {
-            console.error('Error registering commands:', error);
+            log.print("err", 'Error registering commands:', error);
+        }
+    }
+
+    async checkForUpdates() {
+        const response = await axios.get(`https://registry.npmjs.org/discord-easy`);
+        const latestVersion = response.data['dist-tags'].latest;
+    
+        if (latestVersion !== currentVersion) {
+            log.print(`[discord-easy] Update available ${currentVersion} → ${latestVersion} : npm i discord-easy@latest`);
         }
     }
 
